@@ -52,7 +52,7 @@ class _RiddleScreenState extends State<RiddleScreen> {
 
   void handleNextClick() async{
     print(currentRiddleIndex);
-    if(currentRiddleIndex==5) {
+    if(currentRiddleIndex==7) {
 
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>const VideoSplashScreen()));
 
@@ -60,7 +60,7 @@ class _RiddleScreenState extends State<RiddleScreen> {
       return;
     }
 
-    if(currentRiddleIndex<5){
+    if(currentRiddleIndex<7){
 
 
       setState(()  {

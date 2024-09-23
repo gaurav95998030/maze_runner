@@ -20,7 +20,7 @@ class AuthRepo{
       final response = await http.post(
         Uri.parse('$baseUrl/api/login'),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({"teamname": teamname, "mobile": mobile}),
+        body: jsonEncode({"teamlead_roll": teamname, "mobile": mobile}),
       );
 
       if (response.statusCode == 200) {
