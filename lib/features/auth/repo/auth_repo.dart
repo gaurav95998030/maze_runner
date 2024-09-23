@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:maze_runner/features/auth/modal/user_modal.dart';
 import 'package:maze_runner/features/auth/providers/user_provider.dart';
+import 'package:maze_runner/utils/show_snack_bar_msg.dart';
 
 import '../constants/constants.dart';
 
@@ -31,7 +32,14 @@ class AuthRepo{
         ref.read(teamProvider.notifier).updateTeam(LoginResponse.fromJson(responseBody));
 
         return "success";
-      } else {
+      }
+
+      if(response.statusCode==400){
+        ShowSnackBarMSg.showMsg("Please Enter Valid Credentials");
+        return "failed";
+      }
+
+      else {
         return "failed with status: ${response.statusCode}";
       }
     } catch (err) {

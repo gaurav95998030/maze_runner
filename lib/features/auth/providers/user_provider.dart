@@ -24,9 +24,18 @@ class UserNotifier extends StateNotifier<LoginResponse?>{
 
    }
 
-   void updateTeamScore(){
+   void updateTeamScore(int score){
+
+     Team team = Team(id: state!.team.id, teamname: state!.team.teamname, teamlead: state!.team.teamlead, email: state!.team.email, mobile: state!.team.mobile, teamscore: state!.team.teamscore+score, lastSolvedAt: state!.team.lastSolvedAt);
+
+     LoginResponse loginResponse = LoginResponse(message: state!.message, token: state!.token, team: team);
+
+     state = loginResponse;
+
 
    }
+
+
 
 }
 

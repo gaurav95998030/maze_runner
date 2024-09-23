@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:maze_runner/features/auth/modal/user_modal.dart';
 import 'package:maze_runner/features/auth/providers/user_provider.dart';
+import 'package:maze_runner/features/riddles/providers/get_riddles_loader_provider.dart';
 import 'package:maze_runner/features/riddles/providers/riddles_provider.dart';
 
 import '../../riddles/screens/riddle_screen.dart';
@@ -114,9 +115,12 @@ class ThanosComingPage extends StatelessWidget {
                   // Start button
                   Consumer(
                     builder: (context,ref,child) {
+                      bool isLoading = ref.watch(loadRiddleLoaderProvider);
                       return ElevatedButton(
+
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
+                          backgroundColor: Colors.red,
+                          disabledBackgroundColor: Colors.red.withOpacity(0.5),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
@@ -125,16 +129,15 @@ class ThanosComingPage extends StatelessWidget {
                             horizontal: 32,
                           ),
                         ),
-                        onPressed: () async {
+                        onPressed:isLoading?null: () async {
                         bool res = await ref.read(riddleProvider.notifier).loadRiddles();
 
-
                         if(res){
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>RiddleScreen()));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>const RiddleScreen()));
                         }
                         },
-                        child:  const Text(
-                          'Start Your Quest',
+                        child:   Text(
+                          isLoading?"Loading Riddles":'Start Your Quest',
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
