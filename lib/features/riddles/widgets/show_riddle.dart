@@ -153,8 +153,9 @@ class _ShowRiddleState extends State<ShowRiddle> {
                     const SizedBox(height: 20),
                     Consumer(
                       builder: (context,ref,child) {
+                        bool isLoading = ref.watch(nextRiddleLoaderProvider);
                         return ElevatedButton(
-                          onPressed: () async{
+                          onPressed:isLoading?null: () async{
 
 
                             if(answerController.text.trim().isEmpty){
@@ -212,19 +213,15 @@ class _ShowRiddleState extends State<ShowRiddle> {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red[900],
+                            disabledBackgroundColor: Colors.red[500],
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child:  Consumer(
-                            builder: (context,ref,child) {
-                              bool isLoading = ref.watch(nextRiddleLoaderProvider);
-                              return Text(
-                                isLoading?"Please wait":'Next',
-                                style: TextStyle(fontSize: 20, color: Colors.white),
-                              );
-                            }
+                          child:  Text(
+                            isLoading?"Please wait":'Next',
+                            style: const TextStyle(fontSize: 20, color: Colors.white),
                           ),
                         );
                       }
