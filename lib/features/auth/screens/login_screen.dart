@@ -84,119 +84,160 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 40),
                       // Marvel Theme Title
                       Text(
                         'Welcome, Hero!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 32,
+                          fontSize: 36,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Marvel',
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      // Team ID input
-                      TextFormField(
-                        validator: (value){
-                          if(value==null||value.trim().isEmpty){
-                            return "Please Enter Valid Teamname";
-                          }
-                          return null;
-                        },
-                        onSaved: (value){
-                          teamname = value!;
-                        },
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[900]?.withOpacity(0.8),
-                          labelText: 'Team ID',
-                          labelStyle: TextStyle(color: Colors.redAccent),
-                          hintText: 'Enter your Team ID',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          prefixIcon: Icon(Icons.person, color: Colors.redAccent),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      // Password input
-                      TextFormField(
-                        validator: (value){
-                          if(value==null ||value.trim().isEmpty){
-                            return "Please Enter Valid Teamname";
-                          }
-                          return null;
-                        },
-                        onSaved: (value){
-                          mobile = value!;
-                        },
-                        obscureText: true,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[900]?.withOpacity(0.8),
-                          labelText: 'Password',
-                          labelStyle: TextStyle(color: Colors.redAccent),
-                          hintText: 'Enter your Password',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          prefixIcon: Icon(Icons.lock, color: Colors.redAccent),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                          letterSpacing: 1.5,
                         ),
                       ),
                       const SizedBox(height: 30),
-                      // Login button
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      // Team ID input with white error message
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                          inputDecorationTheme: InputDecorationTheme(
+                            errorStyle: TextStyle(color: Colors.white),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
-                        onPressed: () {
-
-
-                           handleGetStartedClick();
-
-
-                        },
-                        child: Consumer(
-                          builder: (context,ref,child) {
-                            bool isLoading = ref.watch(loginLoaderProvider);
-                            return  Text(
-                              isLoading?"Please Wait":'Get Started',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            );
-                          }
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return "Please Enter a Valid Team ID";
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            teamname = value!;
+                          },
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.black.withOpacity(0.8),
+                            labelText: 'Team ID',
+                            labelStyle: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                            hintText: 'Enter your Team ID',
+                            hintStyle: TextStyle(
+                              color: Colors.grey[400],
+                              fontSize: 14,
+                            ),
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: Colors.redAccent,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),
+                      // Password input with white error message
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                          inputDecorationTheme: InputDecorationTheme(
+                            errorStyle: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return "Please Enter a Valid Password";
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            mobile = value!;
+                          },
+                          obscureText: true,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.black.withOpacity(0.8),
+                            labelText: 'Password',
+                            labelStyle: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                            hintText: 'Enter your Password',
+                            hintStyle: TextStyle(
+                              color: Colors.grey[400],
+                              fontSize: 14,
+                            ),
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.redAccent,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      // Login button
+                      Consumer(
+                        builder: (context, ref, child) {
+                          bool isLoading = ref.watch(loginLoaderProvider);
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              disabledBackgroundColor: Colors.red[500],
+                              backgroundColor: Colors.redAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 18),
+                              elevation: 6,
+                              shadowColor: Colors.redAccent.withOpacity(0.5),
+                            ),
+                            onPressed: isLoading ? null : () {
+                              handleGetStartedClick();
+                            },
+                            child: Text(
+                              isLoading ? "Please Wait" : 'Get Started',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 30),
                       // Footer text
                       const Text(
-                        'Powered by UCC DA ',
+                        'Powered by UCC DA',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1.0,
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 40),
                     ],
                   ),
                 ),
               ),
             ),
-          ),
+          )
+
+
         ],
       ),
     );

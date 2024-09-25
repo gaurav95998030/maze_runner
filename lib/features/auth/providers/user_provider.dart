@@ -6,6 +6,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:maze_runner/features/auth/modal/user_modal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserNotifier extends StateNotifier<LoginResponse?>{
 
@@ -13,14 +14,17 @@ class UserNotifier extends StateNotifier<LoginResponse?>{
    UserNotifier(this.ref):super(null);
 
 
-   void loadTeam(){
-
-   }
 
 
-   void updateTeam(LoginResponse team){
+
+   Future<bool> updateTeam(LoginResponse team) async{
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    bool res =   await prefs.setString('token', team.token);
 
      state = team;
+
+     return res;
 
    }
 

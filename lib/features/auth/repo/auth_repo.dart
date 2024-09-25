@@ -29,9 +29,14 @@ class AuthRepo{
 
         print(responseBody);
         // Update the team provider with the parsed LoginResponse
-        ref.read(teamProvider.notifier).updateTeam(LoginResponse.fromJson(responseBody));
+      bool res = await   ref.read(teamProvider.notifier).updateTeam(LoginResponse.fromJson(responseBody));
 
+      if(res){
         return "success";
+      }
+
+
+
       }
 
       if(response.statusCode==400){

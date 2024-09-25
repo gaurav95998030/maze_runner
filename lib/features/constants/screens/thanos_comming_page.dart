@@ -45,34 +45,42 @@ class ThanosComingPage extends StatelessWidget {
           // Main content overlaying the image
           Center(
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Consumer(
-                     builder: (context,ref,child) {
-                       LoginResponse? state = ref.watch(teamProvider);
+                  Consumer(
+                    builder: (context, ref, child) {
+                      LoginResponse? state = ref.watch(teamProvider);
 
-                       if(state!=null){
-                         return Text("Hello Team ${state.team.teamname}",style: const TextStyle(color:Colors.yellow),);
-                       }else{
-                         return const Text("Hello Team");
-                       }
+                      return Text(
+                        state != null
+                            ? "Welcome, Team ${state.team.teamname}"
+                            : "Welcome, Team",
+                        style: TextStyle(
+                          color: Colors.yellow.shade600,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
 
-                     }
-                   ),
+                  // Hero message
                   const Text(
                     "Thanos is Coming for You...",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.redAccent,
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.5,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.8,
                       shadows: [
                         Shadow(
-                          blurRadius: 10.0,
-                          color: Colors.black,
+                          blurRadius: 12.0,
+                          color: Colors.black54,
                           offset: Offset(3, 3),
                         ),
                       ],
@@ -80,19 +88,19 @@ class ThanosComingPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
 
-                  // Challenge to solve riddles
+                  // Challenge description
                   Text(
                     "Be a Mystery Solver and Save the World!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 28,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
+                      letterSpacing: 1.4,
                       shadows: [
                         Shadow(
-                          blurRadius: 10.0,
-                          color: Colors.black,
+                          blurRadius: 8.0,
+                          color: Colors.black45,
                           offset: Offset(2, 2),
                         ),
                       ],
@@ -107,50 +115,54 @@ class ThanosComingPage extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.grey[300],
                       fontSize: 18,
-                      height: 1.5,
+                      fontWeight: FontWeight.w400,
+                      height: 1.6,
                     ),
                   ),
                   const SizedBox(height: 60),
 
                   // Start button
                   Consumer(
-                    builder: (context,ref,child) {
+                    builder: (context, ref, child) {
                       bool isLoading = ref.watch(loadRiddleLoaderProvider);
-                      return ElevatedButton(
 
+                      return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red,
-                          disabledBackgroundColor: Colors.red.withOpacity(0.5),
+                          disabledBackgroundColor: Colors.red.withOpacity(0.6),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(32),
                           ),
                           padding: const EdgeInsets.symmetric(
-                            vertical: 16,
-                            horizontal: 32,
+                            vertical: 18,
+                            horizontal: 36,
                           ),
                         ),
-                        onPressed:isLoading?null: () async {
-                        bool res = await ref.read(riddleProvider.notifier).loadRiddles();
+                        onPressed: isLoading ? null : () async {
+                          bool res = await ref.read(riddleProvider.notifier).loadRiddles();
 
-                        if(res){
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>const RiddleScreen()));
-                        }
+                          if (res) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (ctx) => const RiddleScreen()),
+                            );
+                          }
                         },
-                        child:   Text(
-                          isLoading?"Loading Riddles":'Start Your Quest',
-                          style: TextStyle(
+                        child: Text(
+                          isLoading ? "Loading Riddles..." : 'Start Your Quest',
+                          style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                       );
-                    }
+                    },
                   ),
                 ],
               ),
             ),
           ),
+
         ],
       ),
     );
