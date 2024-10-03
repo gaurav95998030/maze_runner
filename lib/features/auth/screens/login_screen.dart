@@ -16,42 +16,55 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   late VideoPlayerController _controller;
   final _formKey = GlobalKey<FormState>();
 
-  String teamname= '';
+  String teamname = '';
   String mobile = '';
 
   @override
   void initState() {
+    print("login state workinh");
     super.initState();
-    _controller = VideoPlayerController.asset('assets/clips/login.mp4') // Path to your MP4 file
+    _controller = VideoPlayerController.asset('assets/clips/login.mp4')
       ..initialize().then((_) {
-        _controller.setLooping(true); 
+        setState(() {}); // Ensure UI rebuild after initialization
+        _controller.setLooping(true);
         _controller.setPlaybackSpeed(0.5);
-        _controller.setVolume(0);// Loop the video infinitely
-        _controller.play(); // Start playing the video
-        setState(() {});
+        _controller.setVolume(0);
+        _controller.play();
       });
   }
 
   @override
+  void didUpdateWidget(covariant LoginScreen oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    _controller = VideoPlayerController.asset('assets/clips/login.mp4')
+      ..initialize().then((_) {
+        setState(() {}); // Ensure UI rebuild after initialization
+        _controller.setLooping(true);
+        _controller.setPlaybackSpeed(0.5);
+        _controller.setVolume(0);
+        _controller.play();
+      });
+  }
+  @override
   void dispose() {
-    _controller.dispose(); // Dispose of the controller when screen is closed
+    _controller.dispose();
     super.dispose();
   }
 
-
-  void handleGetStartedClick() async{
-    if(_formKey.currentState!.validate()){
+  void handleGetStartedClick() async {
+    if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-     String res = await ref.read(authControllerProvider).loginUser(teamname: teamname, mobile: mobile);
+      String res = await ref.read(authControllerProvider).loginUser(teamname: teamname, mobile: mobile);
 
-     if(!mounted) return;
+      if (!mounted) return;
 
-     if(res=="success"){
-       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>const ThanosComingPage()));
-
-     }
-
+      if (res == "success") {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (ctx) => const ThanosComingPage()),
+        );
+      }
     }
   }
 
@@ -60,7 +73,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background video
+          // Ensure video is only shown after initialization
           _controller.value.isInitialized
               ? SizedBox.expand(
             child: FittedBox(
@@ -74,7 +87,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           )
               : const Center(child: CircularProgressIndicator()),
 
-          // Login form on top of the video
+          // Login form over the video
           Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -85,7 +98,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const SizedBox(height: 40),
-                      // Marvel Theme Title
+                      // Marvel theme title
                       Text(
                         'Welcome, Hero!',
                         textAlign: TextAlign.center,
@@ -98,10 +111,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      // Team ID input with white error message
+                      // Team ID input
                       Theme(
                         data: Theme.of(context).copyWith(
-                          inputDecorationTheme: InputDecorationTheme(
+                          inputDecorationTheme: const InputDecorationTheme(
                             errorStyle: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -115,12 +128,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           onSaved: (value) {
                             teamname = value!;
                           },
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.black.withOpacity(0.8),
                             labelText: 'Team ID',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               color: Colors.redAccent,
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
@@ -130,7 +143,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               color: Colors.grey[400],
                               fontSize: 14,
                             ),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.person,
                               color: Colors.redAccent,
                             ),
@@ -142,10 +155,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Password input with white error message
+                      // Password input
                       Theme(
                         data: Theme.of(context).copyWith(
-                          inputDecorationTheme: InputDecorationTheme(
+                          inputDecorationTheme: const InputDecorationTheme(
                             errorStyle: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -160,12 +173,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             mobile = value!;
                           },
                           obscureText: true,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.black.withOpacity(0.8),
                             labelText: 'Password',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               color: Colors.redAccent,
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
@@ -175,7 +188,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               color: Colors.grey[400],
                               fontSize: 14,
                             ),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.lock,
                               color: Colors.redAccent,
                             ),
@@ -202,9 +215,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               elevation: 6,
                               shadowColor: Colors.redAccent.withOpacity(0.5),
                             ),
-                            onPressed: isLoading ? null : () {
-                              handleGetStartedClick();
-                            },
+                            onPressed: isLoading ? null : handleGetStartedClick,
                             child: Text(
                               isLoading ? "Please Wait" : 'Get Started',
                               style: const TextStyle(
@@ -235,9 +246,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
               ),
             ),
-          )
-
-
+          ),
         ],
       ),
     );

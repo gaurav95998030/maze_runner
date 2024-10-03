@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:maze_runner/features/auth/providers/login_state_provider.dart';
 import 'package:maze_runner/features/auth/screens/login_screen.dart';
 import 'package:maze_runner/features/constants/screens/endling_video_splash_screen.dart';
+import 'package:maze_runner/features/constants/screens/intro.dart';
 import 'package:maze_runner/features/constants/screens/thanos_comming_page.dart';
 import 'package:maze_runner/features/riddles/providers/is_game_completed_provider.dart';
 
