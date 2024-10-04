@@ -58,12 +58,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       String res = await ref.read(authControllerProvider).loginUser(teamname: teamname, mobile: mobile);
 
-      if (!mounted) return;
+
 
       if (res == "success") {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (ctx) => const ThanosComingPage()),
-        );
+
+        if(mounted){
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (ctx) => const ThanosComingPage()),
+          );
+        }
+
       }
     }
   }
