@@ -41,6 +41,17 @@ dependencies:
   http: ^1.2.2
   fluttertoast: ^8.2.8
   shared_preferences: ^2.3.2
+  flutter_launcher_icons: ^0.14.1
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/ucc_logo.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/ucc_logo.png"
+  min_sdk_android: 21
+
 
 dev_dependencies:
   flutter_test:
