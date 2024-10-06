@@ -89,7 +89,7 @@ class ThanosComingPage extends StatelessWidget {
                   const SizedBox(height: 30),
 
                   // Challenge description
-                  Text(
+                  const Text(
                     "Be a Mystery Solver and Save the World!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -110,7 +110,7 @@ class ThanosComingPage extends StatelessWidget {
 
                   // Brief game description
                   Text(
-                    "Six Infinity Stones are hidden, each protected by a riddle. Only a true mystery solver can defeat Thanos and protect the universe.",
+                    "Eight Infinity Stones are hidden, each protected by a riddle. Only a true mystery solver can defeat Thanos and protect the universe.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.grey[300],

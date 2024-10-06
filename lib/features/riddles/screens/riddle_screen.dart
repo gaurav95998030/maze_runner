@@ -39,11 +39,19 @@ class _RiddleScreenState extends State<RiddleScreen> {
      prefs = await SharedPreferences.getInstance();
 
      currentRiddleIndex  = prefs.getInt('currentIndex')??0;
+     if(currentRiddleIndex==7) {
+
+       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>const VideoSplashScreen()));
+
+
+       return;
+     }
      print("gaurav $currentRiddleIndex");
 
      setState(() {
 
      });
+
   }
 
 // Save an integer value to 'counter' key.
